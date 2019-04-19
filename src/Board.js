@@ -216,14 +216,39 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {//
+      var sum = 0;
+      for(var i = 0; i < this.get('n'); i++){
+        for(var j = 0; j < this.get('n'); j++){
+          if(this._getFirstRowColumnIndexForMinorDiagonalOn(i, j) === minorDiagonalColumnIndexAtFirstRow){
+            sum += this.get(i)[j];
+          }
+        }
+      }
+      if(sum > 1){
+        return true;
+      }
+      //create board by looping through twice
+      //if(rci 
+      //if greater than 2, return true;
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
+    //i: o: boolean : c,e:
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+    //loop all the numbers in rci board
+    //perform function above on each index
+    //if true; then return false
+
+    for(var i = 0; i <= (this.get('n')-1)*2; i++){
+      if(this.hasMinorDiagonalConflictAt(i)){
+        return true;
+      }
+       // fixme
     }
+    return false;
+  }  
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
