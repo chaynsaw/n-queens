@@ -77,51 +77,23 @@
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
-    // test if a specific row on this board contains a conflict
 
-    //i:rowIndex o:T/F c: ec:
     hasRowConflictAt: function(rowIndex) {
-
-//access the row.. []
-      var currentRow = this.get(rowIndex);
-      var counter = 0;
-//loop through row for the elements
-      for(var i = 0; i < currentRow.length; i++){
-        if(currentRow[i] === 1){
-          counter ++;
-        }
+      let row = this.get(rowIndex);
+      let count = 0; 
+      for (let i = 0; i < row.length; i++) {
+        count += row[i]
       }
-      if(counter > 1){
-        return true;
-      }
-//if after looping, check if theres one 1, return false
-//if after looping, and theres > 1, return true;
-
-      return false; // fixme
+      return count > 1;
     },
 
     // test if any rows on this board contain conflicts
-
-
-    //i: o:T/F c: ec:
     hasAnyRowConflicts: function() {
-    
-
-    //loop through each row
-
-    for(var i = 0; i< this.rows().length; i++){
-      if(this.hasRowConflictAt(i)){
-        return true;
+      for (let i = 0; i < this.rows().length; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
       }
-    }
-    // for(var i = 0 ; i < grid.length; i++){
-    //   if(hasRowConflictAt(grid[i])){
-    //     return true;
-    //   }
-    // }
-    //for each row, we use above function
-    //after loop, check if any returned true
-    //if it returned true, then return true;  
       return false; // fixme
     },
 
