@@ -101,35 +101,19 @@
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
-    //
-    // test if a specific column on this board contains a conflict
-    // I colIndex (number)
-    // O boolean
-    // C, E none
+
     hasColConflictAt: function(colIndex) {
-      // retrieve the numbers at this.get[key][colIndex]
-      // Add them together
-      // if the sum is > 1; return true; else false.
-      var sum = 0;
-      for (let i = 0; i < this.get('n'); i++) {
-        sum += this.get(i)[colIndex];
+      let size = this.get('n');
+      let count = 0;
+      for (let i = 0; i < size; i++) {
+        let row = this.get(i);
+        count += row[colIndex];
       }
-      if (sum > 1) {
-        return true;
-      }
-      return false; // fixme
+      return count > 1;
     },
 
-    // test if any columns on this board contain conflicts
-    // I none
-    // O boolean
-    // C, E none
+
     hasAnyColConflicts: function() {
-      // loop through every row
-      // call hasColConflictAt on every row
-      // if there is a true value, return true
-      // Loop breaks (returns), after true
-      // if not, return false. 
       for (let i = 0; i < this.get('n'); i++) {
         if (this.hasColConflictAt(i)) {
           return true;
@@ -142,19 +126,9 @@
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
-    //
-    // test if a specific major diagonal on this board contains a conflict
-    // I all the indexes at the top first column (number)
-    // O Boolean
-    // C, E none?
+
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // take whatever number is produced
-      // declare a sum value
-      // if cmajorDiagonal whatever, then add to sum
-      // so need a for loop to iterate through rowIndexes and Colindexes and then add the values to sum
-      // if sum > 1
-      // return true
       var sum = 0;
       for (let i = 0; i < this.get('n'); i++) {
         for (let j = 0; j < this.get('n'); j++) {
