@@ -10,12 +10,28 @@
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
 // take a look at solversSpec.js to see what the tests are expecting
 
+window.findSolution = function(row, n, board, validator, callback) {
+  // if all rows exhausted, this is a valid solution.
+  if (row === n) {
+    return callback();
+  }
 
-// return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
-// I n number. n by n, n by n rooks. 
-// O array of arrays.  =this.rows()
-// C must not have any row or col conflicts.
-// E 0? 1? there's no solutions for 1, and only 1 solution for n=1. 
+  // iterate over possible decisions
+  for (var i = 0; i < n; i++) {
+    // place a piece
+    board.togglePiece(row, i);
+    // recurse into remaining problem
+    if (!board[validator]()) {
+      var result = findSolution(row + 1, n, board, validator, callback);
+      if (result) {
+        return result; // EJECT
+      }
+    }
+    // unplace a piece
+    board.togglePiece(row, i);
+  }
+};
+
 window.findNRooksSolution = function(n) {
   var board = new Board({'n':n})
   var solution = board.rows(); //fixme

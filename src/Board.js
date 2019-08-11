@@ -129,19 +129,36 @@
 
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      var sum = 0;
-      for (let i = 0; i < this.get('n'); i++) {
-        for (let j = 0; j < this.get('n'); j++) {
-          if (this._getFirstRowColumnIndexForMajorDiagonalOn(i, j) === majorDiagonalColumnIndexAtFirstRow) {
-            sum += this.get(i)[j];
-          }
-        }
+    //   var sum = 0;
+    //   for (let i = 0; i < this.get('n'); i++) {
+    //     for (let j = 0; j < this.get('n'); j++) {
+    //       if (this._getFirstRowColumnIndexForMajorDiagonalOn(i, j) === majorDiagonalColumnIndexAtFirstRow) {
+    //         sum += this.get(i)[j];
+    //       }
+    //     }
+    //   }
+    //   if (sum > 1) {
+    //     return true;
+    //   }
+    //   return false; // fixme
+    // },
+
+    var size = this.get('n'); // 4
+    var count = 0;
+    var rowIdx = 0;
+    var colIdx = majorDiagonalColumnIndexAtFirstRow; // -3
+
+    for ( ; rowIdx < size && colIdx < size; rowIdx++, colIdx++ ) {
+      console.log({size, rowIdx, colIdx})
+      if ( colIdx >= 0 ) {
+        var row = this.get(rowIdx);
+        count += row[colIdx];
+        console.log('hit', count)
       }
-      if (sum > 1) {
-        return true;
-      }
-      return false; // fixme
-    },
+    }
+
+    return count > 1
+  },
 
     // test if any major diagonals on this board contain conflicts
     // I none
