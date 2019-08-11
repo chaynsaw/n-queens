@@ -129,19 +129,6 @@
 
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-    //   var sum = 0;
-    //   for (let i = 0; i < this.get('n'); i++) {
-    //     for (let j = 0; j < this.get('n'); j++) {
-    //       if (this._getFirstRowColumnIndexForMajorDiagonalOn(i, j) === majorDiagonalColumnIndexAtFirstRow) {
-    //         sum += this.get(i)[j];
-    //       }
-    //     }
-    //   }
-    //   if (sum > 1) {
-    //     return true;
-    //   }
-    //   return false; // fixme
-    // },
 
     var size = this.get('n'); // 4
     var count = 0;
@@ -149,21 +136,15 @@
     var colIdx = majorDiagonalColumnIndexAtFirstRow; // -3
 
     for ( ; rowIdx < size && colIdx < size; rowIdx++, colIdx++ ) {
-      console.log({size, rowIdx, colIdx})
       if ( colIdx >= 0 ) {
         var row = this.get(rowIdx);
         count += row[colIdx];
-        console.log('hit', count)
       }
     }
 
     return count > 1
   },
 
-    // test if any major diagonals on this board contain conflicts
-    // I none
-    // O boolean
-    // C, E none? 
     hasAnyMajorDiagonalConflicts: function() {
       for (let i = -1 * (this.get('n')-1); i < this.get('n'); i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
@@ -180,37 +161,34 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {//
-      var sum = 0;
-      for(var i = 0; i < this.get('n'); i++){
-        for(var j = 0; j < this.get('n'); j++){
-          if(this._getFirstRowColumnIndexForMinorDiagonalOn(i, j) === minorDiagonalColumnIndexAtFirstRow){
-            sum += this.get(i)[j];
-          }
+      var size = this.get('n');
+      var count = 0;
+      var rowIdx = 0;
+      var colIdx = minorDiagonalColumnIndexAtFirstRow;
+
+      for ( ; rowIdx < size && colIdx >= 0; rowIdx++, colIdx-- ) {
+        if ( colIdx < size ) {
+          var row = this.get(rowIdx);
+          count += row[colIdx];
         }
       }
-      if(sum > 1){
-        return true;
-      }
-      //create board by looping through twice
-      //if(rci 
-      //if greater than 2, return true;
-      return false; // fixme
+
+      return count > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     //i: o: boolean : c,e:
     hasAnyMinorDiagonalConflicts: function() {
-    //loop all the numbers in rci board
-    //perform function above on each index
-    //if true; then return false
+    
+      var size = this.get('n');
 
-    for(var i = 0; i <= (this.get('n')-1)*2; i++){
-      if(this.hasMinorDiagonalConflictAt(i)){
-        return true;
+      for ( var i = (size * 2) - 1; i >= 0; i-- ) {
+        if ( this.hasMinorDiagonalConflictAt(i) ) {
+          return true;
+        }
       }
-       // fixme
-    }
-    return false;
+
+      return false;
   }  
 
     /*--------------------  End of Helper Functions  ---------------------*/

@@ -23,6 +23,12 @@ window.findSolution = function(row, n, board, validator, callback) {
     // recurse into remaining problem
     if (!board[validator]()) {
       var result = findSolution(row + 1, n, board, validator, callback);
+      var solBoard = function() {
+        return _.map(board.rows(), function(row) {
+          return row.slice();
+        });
+      }
+      this.console.log(solBoard());
       if (result) {
         return result; // EJECT
       }
@@ -33,32 +39,30 @@ window.findSolution = function(row, n, board, validator, callback) {
 };
 
 window.findNRooksSolution = function(n) {
-  var board = new Board({'n':n})
-  var solution = board.rows(); //fixme
-  // instantiate a board, this.rows()
-  // togglePiece to begin with
-  // then iterate to the next spot
-  // togglePiece for that spot EG [1, 1, 0, 0]
-  // call hasAnyRowConflicts || ColConflicts
-  // if either are true, togglePiece for that spot back
-  // move on, iterating through whole book
-  // upon reaching the end of the book, return solution. 
-  for (let i = 0; i < board.get('n'); i++) {
-    for (let j = 0; j < board.get('n'); j++) {
-      board.togglePiece(i,j)
-      if (board.hasAnyRooksConflicts()) {
-        board.togglePiece(i,j)
-      }
-    }
-  }
+
+  var board = new Board({n: n});
+
+  var solution = findSolution(0, n, board, 'hasAnyRooksConflicts', function() {
+    return _.map(board.rows(), function(row) {
+      return row.slice();
+    });
+  });
+  
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  
+  var board = new Board({n: n});
 
+  var solutionCount = 0;
+
+  findSolution(0, n, board, 'hasAnyRooksConflicts', function() {
+    solutionCount++;
+  });
+  
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
