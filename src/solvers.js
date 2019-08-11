@@ -23,11 +23,6 @@ window.findSolution = function(row, n, board, validator, callback) {
     // recurse into remaining problem
     if (!board[validator]()) {
       var result = findSolution(row + 1, n, board, validator, callback);
-      var solBoard = function() {
-        return _.map(board.rows(), function(row) {
-          return row.slice();
-        });
-      }
       this.console.log(solBoard());
       if (result) {
         return result; // EJECT
